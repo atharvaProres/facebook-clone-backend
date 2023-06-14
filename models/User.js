@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+
 const { ObjectId } = mongoose.Schema;
+
 const userSchema = mongoose.Schema(
   {
     first_name: {
@@ -8,14 +10,12 @@ const userSchema = mongoose.Schema(
       trim: true,
       text: true,
     },
-
     last_name: {
       type: String,
-      required: [true, "lastname is required"],
+      required: [true, "last name is required"],
       trim: true,
       text: true,
     },
-
     username: {
       type: String,
       required: [true, "username is required"],
@@ -29,14 +29,13 @@ const userSchema = mongoose.Schema(
       required: [true, "email is required"],
       trim: true,
     },
-
     password: {
       type: String,
       required: [true, "password is required"],
     },
-
     picture: {
       type: String,
+      trim: true,
       default:
         "https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png",
     },
@@ -87,7 +86,7 @@ const userSchema = mongoose.Schema(
     search: [
       {
         user: {
-          type: mongoose.Schema.ObjectId,
+          type: ObjectId,
           ref: "User",
         },
       },
@@ -119,26 +118,28 @@ const userSchema = mongoose.Schema(
       },
       relationship: {
         type: String,
-        enum: ["Single", "In a relationship", "Married", "divorced"],
+        enum: ["Single", "In a relationship", "Married", "Divorced"],
       },
       instagram: {
         type: String,
       },
-      savedPosts: [
-        {
-          post: {
-            type: ObjectId,
-            ref: "Post",
-          },
-          sacedAt: {
-            type: Date,
-            default: new Date(),
-          },
-        },
-      ],
     },
+    savedPosts: [
+      {
+        post: {
+          type: ObjectId,
+          ref: "Post",
+        },
+        savedAt: {
+          type: Date,
+          default: new Date(),
+        },
+      },
+    ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model("User", userSchema);

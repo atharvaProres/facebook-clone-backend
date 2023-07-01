@@ -67,4 +67,3 @@ exports.sendResetCode = (email, name, code) => {
     return res;
   });
 };
-
